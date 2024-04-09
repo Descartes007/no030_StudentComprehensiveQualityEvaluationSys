@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.ShoucangjiluMapper">
+  <resultMap id="BaseResultMap" type="com.entity.Shoucangjilu">
+    <id column="id" jdbcType="INTEGER" property="id" />
+	<result column="username" jdbcType="VARCHAR" property="username" />    <result column="xwid" jdbcType="VARCHAR" property="xwid" />    <result column="ziduan" jdbcType="VARCHAR" property="ziduan" />    <result column="biao" jdbcType="VARCHAR" property="biao" />
+    <result column="biaoj" jdbcType="VARCHAR" property="biaoj" />    
+    <result column="addtime" jdbcType="VARCHAR" property="addtime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, username,xwid,ziduan,biao,biaoj, addtime
+  </sql>
+  <select id="quchongShoucangjilu"  parameterType="java.util.Map" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from shoucangjilu 
+    where username = #{username,jdbcType=VARCHAR} 
+  </select>
+ <select id="getCount"   resultType="int" parameterType="java.util.Map" >
+    select  count(*) from shoucangjilu  where 1=1
+    <if test="username!=null">and username like  concat('%',#{username,jdbcType=VARCHAR},'%')</if>     <if test="xwid!=null">and xwid like  concat('%',#{xwid,jdbcType=VARCHAR},'%')</if>     <if test="ziduan!=null">and ziduan like  concat('%',#{ziduan,jdbcType=VARCHAR},'%')</if>     <if test="biao!=null">and biao like  concat('%',#{biao,jdbcType=VARCHAR},'%')</if>     
+  </select> 
+  <select id="getAll"   resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select   <include refid="Base_Column_List" /> from shoucangjilu  where 1=1
+    <if test="username!=null">
+    and username =#{username}
+    </if>
+  </select>
+  
+   <select id="getByPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+     select  <include refid="Base_Column_List" /> 
+     from shoucangjilu where 1=1 
+     <if test="username!=null">and username like  concat('%',#{username,jdbcType=VARCHAR},'%')</if>     <if test="xwid!=null">and xwid like  concat('%',#{xwid,jdbcType=VARCHAR},'%')</if>     <if test="ziduan!=null">and ziduan like  concat('%',#{ziduan,jdbcType=VARCHAR},'%')</if>     <if test="biao!=null">and biao like  concat('%',#{biao,jdbcType=VARCHAR},'%')</if>     
+	 order by id desc
+     <if test="pageno!=null and pageSize!=null">
+     limit #{pageno},#{pageSize}
+     </if>
+    </select>
+     
+  
+	 
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from shoucangjilu
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from shoucangjilu
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.entity.Shoucangjilu">
+    insert into shoucangjilu (id, username,xwid,ziduan,biao,biaoj, addtime)
+    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR},#{xwid,jdbcType=VARCHAR},#{ziduan,jdbcType=VARCHAR},#{biao,jdbcType=VARCHAR},#{biaoj,jdbcType=VARCHAR}, #{addtime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.Shoucangjilu">
+    insert into shoucangjilu
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="username != null"> username, </if>      <if test="xwid != null"> xwid, </if>      <if test="ziduan != null"> ziduan, </if>      <if test="biao != null"> biao, </if>      
+      <if test="addtime != null">
+        addtime,
+      </if>
+      
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="username != null"> #{username,jdbcType=VARCHAR},</if>      <if test="xwid != null"> #{xwid,jdbcType=VARCHAR},</if>      <if test="ziduan != null"> #{ziduan,jdbcType=VARCHAR},</if>      <if test="biao != null"> #{biao,jdbcType=VARCHAR},</if>      
+      <if test="addtime != null">
+        #{addtime,jdbcType=VARCHAR},
+      </if>
+      
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.Shoucangjilu">
+    update shoucangjilu
+    <set>
+	  <if test="username != null"> username = #{username,jdbcType=VARCHAR},</if>      <if test="xwid != null"> xwid = #{xwid,jdbcType=VARCHAR},</if>      <if test="ziduan != null"> ziduan = #{ziduan,jdbcType=VARCHAR},</if>      <if test="biao != null"> biao = #{biao,jdbcType=VARCHAR},</if>
+      <if test="biaoj != null"> biaoj = #{biaoj,jdbcType=VARCHAR},</if>      
+      <if test="addtime != null">
+        addtime = #{addtime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.Shoucangjilu">
+    update shoucangjilu
+    set username = #{username,jdbcType=VARCHAR},xwid = #{xwid,jdbcType=VARCHAR},ziduan = #{ziduan,jdbcType=VARCHAR},biao = #{biao,jdbcType=VARCHAR}, biaoj = #{biaoj,jdbcType=VARCHAR}, addtime = #{addtime,jdbcType=VARCHAR} where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

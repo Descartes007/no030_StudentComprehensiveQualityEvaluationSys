@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.ZonghecepingMapper">
+  <resultMap id="BaseResultMap" type="com.entity.Zongheceping">
+    <id column="id" jdbcType="INTEGER" property="id" />
+	<result column="xuehao" jdbcType="VARCHAR" property="xuehao" />    <result column="xingming" jdbcType="VARCHAR" property="xingming" />    <result column="banji" jdbcType="VARCHAR" property="banji" />    <result column="jisuanchuxueshengcaoxingcepingfen" jdbcType="VARCHAR" property="jisuanchuxueshengcaoxingcepingfen" />    <result column="zhiyucepingdefen" jdbcType="VARCHAR" property="zhiyucepingdefen" />    <result column="nenglijiafenxiangdefen" jdbcType="VARCHAR" property="nenglijiafenxiangdefen" />    <result column="zonghedefen" jdbcType="VARCHAR" property="zonghedefen" />    
+    <result column="addtime" jdbcType="VARCHAR" property="addtime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, xuehao,xingming,banji,jisuanchuxueshengcaoxingcepingfen,zhiyucepingdefen,nenglijiafenxiangdefen,zonghedefen, addtime
+  </sql>
+  <select id="quchongZongheceping"  parameterType="java.util.Map" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from zongheceping 
+    where xuehao = #{xuehao,jdbcType=VARCHAR} limit 0,1
+  </select>
+ <select id="getCount"   resultType="int" parameterType="java.util.Map" >
+    select  count(*) from zongheceping  where 1=1
+    <if test="xuehao!=null">and xuehao like  concat('%',#{xuehao,jdbcType=VARCHAR},'%')</if>     <if test="xingming!=null">and xingming like  concat('%',#{xingming,jdbcType=VARCHAR},'%')</if>     <if test="banji!=null">and banji like  concat('%',#{banji,jdbcType=VARCHAR},'%')</if>     <if test="jisuanchuxueshengcaoxingcepingfen!=null">and jisuanchuxueshengcaoxingcepingfen like  concat('%',#{jisuanchuxueshengcaoxingcepingfen,jdbcType=VARCHAR},'%')</if>     <if test="zhiyucepingdefen!=null">and zhiyucepingdefen like  concat('%',#{zhiyucepingdefen,jdbcType=VARCHAR},'%')</if>     <if test="nenglijiafenxiangdefen!=null">and nenglijiafenxiangdefen like  concat('%',#{nenglijiafenxiangdefen,jdbcType=VARCHAR},'%')</if>     <if test="zonghedefen!=null">and zonghedefen like  concat('%',#{zonghedefen,jdbcType=VARCHAR},'%')</if>     
+  </select> 
+  <select id="getAll"   resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select   <include refid="Base_Column_List" /> from zongheceping  where 1=1
+    <if test="xuehao!=null">
+    and xuehao =#{xuehao}
+    </if>
+  </select>
+  
+  <select id="getsyzongheceping1"   resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select   <include refid="Base_Column_List" /> from zongheceping  where 1=1
+    limit 0,5
+  </select>
+  <select id="getsyzongheceping2"   resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select   <include refid="Base_Column_List" /> from zongheceping  where 1=1
+    limit 0,5
+  </select>
+  <select id="getsyzongheceping3"   resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select   <include refid="Base_Column_List" /> from zongheceping  where 1=1
+    limit 0,5
+  </select>
+  
+   <select id="getByPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+     select  <include refid="Base_Column_List" /> 
+     from zongheceping where 1=1 
+     <if test="xuehao!=null">and xuehao like  concat('%',#{xuehao,jdbcType=VARCHAR},'%')</if>     <if test="xingming!=null">and xingming like  concat('%',#{xingming,jdbcType=VARCHAR},'%')</if>     <if test="banji!=null">and banji like  concat('%',#{banji,jdbcType=VARCHAR},'%')</if>     <if test="jisuanchuxueshengcaoxingcepingfen!=null">and jisuanchuxueshengcaoxingcepingfen like  concat('%',#{jisuanchuxueshengcaoxingcepingfen,jdbcType=VARCHAR},'%')</if>     <if test="zhiyucepingdefen!=null">and zhiyucepingdefen like  concat('%',#{zhiyucepingdefen,jdbcType=VARCHAR},'%')</if>     <if test="nenglijiafenxiangdefen!=null">and nenglijiafenxiangdefen like  concat('%',#{nenglijiafenxiangdefen,jdbcType=VARCHAR},'%')</if>     <if test="zonghedefen!=null">and zonghedefen like  concat('%',#{zonghedefen,jdbcType=VARCHAR},'%')</if>     
+	 order by id desc
+     <if test="pageno!=null and pageSize!=null">
+     limit #{pageno},#{pageSize}
+     </if>
+     </select>
+	 
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from zongheceping
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from zongheceping
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.entity.Zongheceping">
+    insert into zongheceping (id, xuehao,xingming,banji,jisuanchuxueshengcaoxingcepingfen,zhiyucepingdefen,nenglijiafenxiangdefen,zonghedefen, addtime)
+    values (#{id,jdbcType=INTEGER}, #{xuehao,jdbcType=VARCHAR},#{xingming,jdbcType=VARCHAR},#{banji,jdbcType=VARCHAR},#{jisuanchuxueshengcaoxingcepingfen,jdbcType=VARCHAR},#{zhiyucepingdefen,jdbcType=VARCHAR},#{nenglijiafenxiangdefen,jdbcType=VARCHAR},#{zonghedefen,jdbcType=VARCHAR}, #{addtime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.Zongheceping">
+    insert into zongheceping
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="xuehao != null"> xuehao, </if>      <if test="xingming != null"> xingming, </if>      <if test="banji != null"> banji, </if>      <if test="jisuanchuxueshengcaoxingcepingfen != null"> jisuanchuxueshengcaoxingcepingfen, </if>      <if test="zhiyucepingdefen != null"> zhiyucepingdefen, </if>      <if test="nenglijiafenxiangdefen != null"> nenglijiafenxiangdefen, </if>      <if test="zonghedefen != null"> zonghedefen, </if>      
+      <if test="addtime != null">
+        addtime,
+      </if>
+      
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="xuehao != null"> #{xuehao,jdbcType=VARCHAR},</if>      <if test="xingming != null"> #{xingming,jdbcType=VARCHAR},</if>      <if test="banji != null"> #{banji,jdbcType=VARCHAR},</if>      <if test="jisuanchuxueshengcaoxingcepingfen != null"> #{jisuanchuxueshengcaoxingcepingfen,jdbcType=VARCHAR},</if>      <if test="zhiyucepingdefen != null"> #{zhiyucepingdefen,jdbcType=VARCHAR},</if>      <if test="nenglijiafenxiangdefen != null"> #{nenglijiafenxiangdefen,jdbcType=VARCHAR},</if>      <if test="zonghedefen != null"> #{zonghedefen,jdbcType=VARCHAR},</if>      
+      <if test="addtime != null">
+        #{addtime,jdbcType=VARCHAR},
+      </if>
+      
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.Zongheceping">
+    update zongheceping
+    <set>
+	  <if test="xuehao != null"> xuehao = #{xuehao,jdbcType=VARCHAR},</if>      <if test="xingming != null"> xingming = #{xingming,jdbcType=VARCHAR},</if>      <if test="banji != null"> banji = #{banji,jdbcType=VARCHAR},</if>      <if test="jisuanchuxueshengcaoxingcepingfen != null"> jisuanchuxueshengcaoxingcepingfen = #{jisuanchuxueshengcaoxingcepingfen,jdbcType=VARCHAR},</if>      <if test="zhiyucepingdefen != null"> zhiyucepingdefen = #{zhiyucepingdefen,jdbcType=VARCHAR},</if>      <if test="nenglijiafenxiangdefen != null"> nenglijiafenxiangdefen = #{nenglijiafenxiangdefen,jdbcType=VARCHAR},</if>      <if test="zonghedefen != null"> zonghedefen = #{zonghedefen,jdbcType=VARCHAR},</if>      
+      <if test="addtime != null">
+        addtime = #{addtime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  
+  
+  <update id="updateByPrimaryKey" parameterType="com.entity.Zongheceping">
+    update zongheceping
+    set xuehao = #{xuehao,jdbcType=VARCHAR},xingming = #{xingming,jdbcType=VARCHAR},banji = #{banji,jdbcType=VARCHAR},jisuanchuxueshengcaoxingcepingfen = #{jisuanchuxueshengcaoxingcepingfen,jdbcType=VARCHAR},zhiyucepingdefen = #{zhiyucepingdefen,jdbcType=VARCHAR},nenglijiafenxiangdefen = #{nenglijiafenxiangdefen,jdbcType=VARCHAR},zonghedefen = #{zonghedefen,jdbcType=VARCHAR},  addtime = #{addtime,jdbcType=VARCHAR} where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.AllusersMapper">
+  <resultMap id="BaseResultMap" type="com.entity.Allusers">
+    <id column="id" jdbcType="INTEGER" property="id" />
+	<result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="pwd" jdbcType="VARCHAR" property="pwd" />
+    <result column="cx" jdbcType="VARCHAR" property="cx" />
+    
+    <result column="addtime" jdbcType="VARCHAR" property="addtime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, username,pwd,cx, addtime
+  </sql>
+  
+   <select id="allusersLogin"  parameterType="java.util.Map" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from allusers
+    where username = #{username,jdbcType=VARCHAR} and pwd=#{pwd,jdbcType=VARCHAR} 
+  </select>
+  
+  <select id="quchongAllusers"  parameterType="java.util.Map" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from allusers 
+    where username = #{username,jdbcType=VARCHAR} 
+  </select>
+ <select id="getCount"   resultType="int" parameterType="java.util.Map" >
+    select  count(*) from allusers  where 1=1
+    <if test="username!=null">
+    and username =#{username} 
+    </if>
+  </select> 
+  <select id="getAll"   resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select   <include refid="Base_Column_List" /> from allusers  where 1=1
+    <if test="username!=null">
+    and username =#{username}
+    </if>
+  </select>
+  
+   <select id="getByPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+     select  <include refid="Base_Column_List" /> 
+     from allusers where 1=1 
+     <if test="username!=null">and username like  concat('%',#{username,jdbcType=VARCHAR},'%')</if>
+     <if test="pwd!=null">and pwd like  concat('%',#{pwd,jdbcType=VARCHAR},'%')</if>
+     <if test="cx!=null">and cx like  concat('%',#{cx,jdbcType=VARCHAR},'%')</if>
+     
+     <if test="pageno!=null and pageSize!=null">
+     limit #{pageno},#{pageSize}
+     </if>
+     </select>
+	 
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from allusers
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from allusers
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.entity.Allusers">
+    insert into allusers (id, username,pwd,cx, addtime)
+    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR},#{pwd,jdbcType=VARCHAR},#{cx,jdbcType=VARCHAR}, #{addtime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.Allusers">
+    insert into allusers
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="username != null"> username, </if>
+      <if test="pwd != null"> pwd, </if>
+      <if test="cx != null"> cx, </if>
+      
+      <if test="addtime != null">
+        addtime,
+      </if>
+      
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="username != null"> #{username,jdbcType=VARCHAR},</if>
+      <if test="pwd != null"> #{pwd,jdbcType=VARCHAR},</if>
+      <if test="cx != null"> #{cx,jdbcType=VARCHAR},</if>
+      
+      <if test="addtime != null">
+        #{addtime,jdbcType=VARCHAR},
+      </if>
+      
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.Allusers">
+    update allusers
+    <set>
+	  <if test="username != null"> username = #{username,jdbcType=VARCHAR},</if>
+      <if test="pwd != null"> pwd = #{pwd,jdbcType=VARCHAR},</if>
+      <if test="cx != null"> cx = #{cx,jdbcType=VARCHAR},</if>
+      
+      <if test="addtime != null">
+        addtime = #{addtime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.Allusers">
+    update allusers
+    set username = #{username,jdbcType=VARCHAR},pwd = #{pwd,jdbcType=VARCHAR},cx = #{cx,jdbcType=VARCHAR},  addtime = #{addtime,jdbcType=VARCHAR} where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

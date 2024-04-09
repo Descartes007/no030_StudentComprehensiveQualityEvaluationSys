@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.YouqinglianjieMapper">
+  <resultMap id="BaseResultMap" type="com.entity.Youqinglianjie">
+    <id column="id" jdbcType="INTEGER" property="id" />
+	<result column="wangzhanmingcheng" jdbcType="VARCHAR" property="wangzhanmingcheng" />    <result column="wangzhi" jdbcType="VARCHAR" property="wangzhi" />    <result column="LOGO" jdbcType="VARCHAR" property="LOGO" />    
+    <result column="addtime" jdbcType="VARCHAR" property="addtime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, wangzhanmingcheng,wangzhi,LOGO, addtime
+  </sql>
+  <select id="quchongYouqinglianjie"  parameterType="java.util.Map" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from youqinglianjie 
+    where wangzhanmingcheng = #{wangzhanmingcheng,jdbcType=VARCHAR} limit 0,1
+  </select>
+ <select id="getCount"   resultType="int" parameterType="java.util.Map" >
+    select  count(*) from youqinglianjie  where 1=1
+    <if test="wangzhanmingcheng!=null">and wangzhanmingcheng like  concat('%',#{wangzhanmingcheng,jdbcType=VARCHAR},'%')</if>     <if test="wangzhi!=null">and wangzhi like  concat('%',#{wangzhi,jdbcType=VARCHAR},'%')</if>     <if test="LOGO!=null">and LOGO like  concat('%',#{LOGO,jdbcType=VARCHAR},'%')</if>     
+  </select> 
+  <select id="getAll"   resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select   <include refid="Base_Column_List" /> from youqinglianjie  where 1=1
+    <if test="wangzhanmingcheng!=null">
+    and wangzhanmingcheng =#{wangzhanmingcheng}
+    </if>
+  </select>
+  
+  <select id="getsyyouqinglianjie1"   resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select   <include refid="Base_Column_List" /> from youqinglianjie  where 1=1
+    limit 0,5
+  </select>
+  <select id="getsyyouqinglianjie2"   resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select   <include refid="Base_Column_List" /> from youqinglianjie  where 1=1
+    limit 0,5
+  </select>
+  <select id="getsyyouqinglianjie3"   resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select   <include refid="Base_Column_List" /> from youqinglianjie  where 1=1
+    limit 0,5
+  </select>
+  
+   <select id="getByPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+     select  <include refid="Base_Column_List" /> 
+     from youqinglianjie where 1=1 
+     <if test="wangzhanmingcheng!=null">and wangzhanmingcheng like  concat('%',#{wangzhanmingcheng,jdbcType=VARCHAR},'%')</if>     <if test="wangzhi!=null">and wangzhi like  concat('%',#{wangzhi,jdbcType=VARCHAR},'%')</if>     <if test="LOGO!=null">and LOGO like  concat('%',#{LOGO,jdbcType=VARCHAR},'%')</if>     
+	 order by id desc
+     <if test="pageno!=null and pageSize!=null">
+     limit #{pageno},#{pageSize}
+     </if>
+     </select>
+	 
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from youqinglianjie
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from youqinglianjie
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.entity.Youqinglianjie">
+    insert into youqinglianjie (id, wangzhanmingcheng,wangzhi,LOGO, addtime)
+    values (#{id,jdbcType=INTEGER}, #{wangzhanmingcheng,jdbcType=VARCHAR},#{wangzhi,jdbcType=VARCHAR},#{LOGO,jdbcType=VARCHAR}, #{addtime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.Youqinglianjie">
+    insert into youqinglianjie
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="wangzhanmingcheng != null"> wangzhanmingcheng, </if>      <if test="wangzhi != null"> wangzhi, </if>      <if test="LOGO != null"> LOGO, </if>      
+      <if test="addtime != null">
+        addtime,
+      </if>
+      
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="wangzhanmingcheng != null"> #{wangzhanmingcheng,jdbcType=VARCHAR},</if>      <if test="wangzhi != null"> #{wangzhi,jdbcType=VARCHAR},</if>      <if test="LOGO != null"> #{LOGO,jdbcType=VARCHAR},</if>      
+      <if test="addtime != null">
+        #{addtime,jdbcType=VARCHAR},
+      </if>
+      
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.Youqinglianjie">
+    update youqinglianjie
+    <set>
+	  <if test="wangzhanmingcheng != null"> wangzhanmingcheng = #{wangzhanmingcheng,jdbcType=VARCHAR},</if>      <if test="wangzhi != null"> wangzhi = #{wangzhi,jdbcType=VARCHAR},</if>      <if test="LOGO != null"> LOGO = #{LOGO,jdbcType=VARCHAR},</if>      
+      <if test="addtime != null">
+        addtime = #{addtime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  
+  
+  <update id="updateByPrimaryKey" parameterType="com.entity.Youqinglianjie">
+    update youqinglianjie
+    set wangzhanmingcheng = #{wangzhanmingcheng,jdbcType=VARCHAR},wangzhi = #{wangzhi,jdbcType=VARCHAR},LOGO = #{LOGO,jdbcType=VARCHAR},  addtime = #{addtime,jdbcType=VARCHAR} where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

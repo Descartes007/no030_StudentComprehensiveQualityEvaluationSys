@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.PinglunMapper">
+  <resultMap id="BaseResultMap" type="com.entity.Pinglun">
+    <id column="id" jdbcType="INTEGER" property="id" />
+	<result column="xinwenID" jdbcType="VARCHAR" property="xinwenID" />    <result column="pinglunneirong" jdbcType="VARCHAR" property="pinglunneirong" />    <result column="pinglunren" jdbcType="VARCHAR" property="pinglunren" />    <result column="pingfen" jdbcType="VARCHAR" property="pingfen" />    <result column="biao" jdbcType="VARCHAR" property="biao" />    
+    <result column="addtime" jdbcType="VARCHAR" property="addtime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, xinwenID,pinglunneirong,pinglunren,pingfen,biao, addtime
+  </sql>
+  <select id="quchongPinglun"  parameterType="java.util.Map" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from pinglun 
+    where pinglunren = #{pinglunren,jdbcType=VARCHAR} 
+  </select>
+ <select id="getCount"   resultType="int" parameterType="java.util.Map" >
+    select  count(*) from pinglun  where 1=1
+    <if test="xinwenID!=null">and xinwenID like  concat('%',#{xinwenID,jdbcType=VARCHAR},'%')</if>     <if test="pinglunneirong!=null">and pinglunneirong like  concat('%',#{pinglunneirong,jdbcType=VARCHAR},'%')</if>     <if test="pinglunren!=null">and pinglunren like  concat('%',#{pinglunren,jdbcType=VARCHAR},'%')</if>     <if test="pingfen!=null">and pingfen like  concat('%',#{pingfen,jdbcType=VARCHAR},'%')</if>     <if test="biao!=null">and biao like  concat('%',#{biao,jdbcType=VARCHAR},'%')</if>     
+  </select> 
+  <select id="getAll"   resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select   <include refid="Base_Column_List" /> from pinglun  where 1=1
+    <if test="pinglunren!=null">
+    and pinglunren =#{pinglunren}
+    </if>
+  </select>
+  
+   <select id="getByPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+     select  <include refid="Base_Column_List" /> 
+     from pinglun where 1=1 
+     <if test="xinwenID!=null">and xinwenID like  concat('%',#{xinwenID,jdbcType=VARCHAR},'%')</if>     <if test="pinglunneirong!=null">and pinglunneirong like  concat('%',#{pinglunneirong,jdbcType=VARCHAR},'%')</if>     <if test="pinglunren!=null">and pinglunren like  concat('%',#{pinglunren,jdbcType=VARCHAR},'%')</if>     <if test="pingfen!=null">and pingfen like  concat('%',#{pingfen,jdbcType=VARCHAR},'%')</if>     <if test="biao!=null">and biao like  concat('%',#{biao,jdbcType=VARCHAR},'%')</if>     
+	 order by id desc
+     <if test="pageno!=null and pageSize!=null">
+     limit #{pageno},#{pageSize}
+     </if>
+     </select>
+	 
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from pinglun
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from pinglun
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.entity.Pinglun">
+    insert into pinglun (id, xinwenID,pinglunneirong,pinglunren,pingfen,biao, addtime)
+    values (#{id,jdbcType=INTEGER}, #{xinwenID,jdbcType=VARCHAR},#{pinglunneirong,jdbcType=VARCHAR},#{pinglunren,jdbcType=VARCHAR},#{pingfen,jdbcType=VARCHAR},#{biao,jdbcType=VARCHAR}, #{addtime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.Pinglun">
+    insert into pinglun
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="xinwenID != null"> xinwenID, </if>      <if test="pinglunneirong != null"> pinglunneirong, </if>      <if test="pinglunren != null"> pinglunren, </if>      <if test="pingfen != null"> pingfen, </if>      <if test="biao != null"> biao, </if>      
+      <if test="addtime != null">
+        addtime,
+      </if>
+      
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="xinwenID != null"> #{xinwenID,jdbcType=VARCHAR},</if>      <if test="pinglunneirong != null"> #{pinglunneirong,jdbcType=VARCHAR},</if>      <if test="pinglunren != null"> #{pinglunren,jdbcType=VARCHAR},</if>      <if test="pingfen != null"> #{pingfen,jdbcType=VARCHAR},</if>      <if test="biao != null"> #{biao,jdbcType=VARCHAR},</if>      
+      <if test="addtime != null">
+        #{addtime,jdbcType=VARCHAR},
+      </if>
+      
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.Pinglun">
+    update pinglun
+    <set>
+	  <if test="xinwenID != null"> xinwenID = #{xinwenID,jdbcType=VARCHAR},</if>      <if test="pinglunneirong != null"> pinglunneirong = #{pinglunneirong,jdbcType=VARCHAR},</if>      <if test="pinglunren != null"> pinglunren = #{pinglunren,jdbcType=VARCHAR},</if>      <if test="pingfen != null"> pingfen = #{pingfen,jdbcType=VARCHAR},</if>      <if test="biao != null"> biao = #{biao,jdbcType=VARCHAR},</if>      
+      <if test="addtime != null">
+        addtime = #{addtime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.entity.Pinglun">
+    update pinglun
+    set xinwenID = #{xinwenID,jdbcType=VARCHAR},pinglunneirong = #{pinglunneirong,jdbcType=VARCHAR},pinglunren = #{pinglunren,jdbcType=VARCHAR},pingfen = #{pingfen,jdbcType=VARCHAR},biao = #{biao,jdbcType=VARCHAR},  addtime = #{addtime,jdbcType=VARCHAR} where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
